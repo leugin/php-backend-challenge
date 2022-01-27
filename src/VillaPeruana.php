@@ -9,6 +9,10 @@ class VillaPeruana
     public $quality;
 
     public $sellIn;
+    
+    const PISCO_PERUANO = 'Pisco Peruano';
+    const VIP_TICKET_PICK_FLOID = 'Ticket VIP al concierto de Pick Floid';
+    const TUMI_ORO_NOCHE = 'Tumi de Oro Moche';
 
     public function __construct($name, $quality, $sellIn)
     {
@@ -23,9 +27,9 @@ class VillaPeruana
 
     public function tick()
     {
-        if ($this->name != 'Pisco Peruano' and $this->name != 'Ticket VIP al concierto de Pick Floid') {
+        if ($this->name != self::PISCO_PERUANO  and $this->name != self::VIP_TICKET_PICK_FLOID) {
             if ($this->quality > 0) {
-                if ($this->name != 'Tumi de Oro Moche') {
+                if ($this->name != self::TUMI_ORO_NOCHE) {
                     $this->quality = $this->quality - 1;
                 }
             }
@@ -33,7 +37,7 @@ class VillaPeruana
             if ($this->quality < 50) {
                 $this->quality = $this->quality + 1;
 
-                if ($this->name == 'Ticket VIP al concierto de Pick Floid') {
+                if ($this->name == self::VIP_TICKET_PICK_FLOID) {
                     if ($this->sellIn < 11) {
                         if ($this->quality < 50) {
                             $this->quality = $this->quality + 1;
@@ -48,15 +52,15 @@ class VillaPeruana
             }
         }
 
-        if ($this->name != 'Tumi de Oro Moche') {
+        if ($this->name != self::TUMI_ORO_NOCHE) {
             $this->sellIn = $this->sellIn - 1;
         }
 
         if ($this->sellIn < 0) {
-            if ($this->name != 'Pisco Peruano') {
-                if ($this->name != 'Ticket VIP al concierto de Pick Floid') {
+            if ($this->name != self::PISCO_PERUANO) {
+                if ($this->name != self::VIP_TICKET_PICK_FLOID) {
                     if ($this->quality > 0) {
-                        if ($this->name != 'Tumi de Oro Moche') {
+                        if ($this->name != self::TUMI_ORO_NOCHE) {
                             $this->quality = $this->quality - 1;
                         }
                     }
