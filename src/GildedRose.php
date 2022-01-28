@@ -12,7 +12,7 @@ use App\Context\App;
  * @param static $instance App instance
  * @param ProductPrototypeFactory $factory the factory
  */
-class VillaPeruana
+class GildedRose
 { 
 
       /**
