@@ -5,6 +5,7 @@ namespace App\Context\Infrastructure\PrototypeFactories;
 use App\Context\Domain\Contracts\ProductPrototypeFactory;
 use App\Context\Domain\Contracts\Tickeable;
 use App\Context\Domain\Dto\RequestParameters;
+use App\Context\Infrastructure\PrototypeModels\Cafe;
 use App\Context\Infrastructure\PrototypeModels\Normal;
 use App\Context\Infrastructure\PrototypeModels\PiscoPeruano;
 use App\Context\Infrastructure\PrototypeModels\TicketVip;
@@ -46,6 +47,9 @@ class SwitchProductFactory implements ProductPrototypeFactory
 
             case self::TUMI_ORO_NOCHE:
                 return  Tumi::class;
+
+            case self::CAFE:
+                return  Cafe::class;
 
             default:
                 return Normal::class;
