@@ -2,72 +2,63 @@
 
 namespace App;
 
+use App\Context\Application\UseCase\CreateProductByNameUseCase;
+use App\Context\Domain\Contracts\ProductPrototypeFactory;
+use App\Context\Domain\Dto\RequestParameters;
+use App\Context\Infrastructure\PrototypeFactories\SwitchProductFactory;
+
+
+/**
+ * 
+ * Main  class
+ * 
+ * @param static $instance App instance
+ * @param ProductPrototypeFactory $factory the factory
+ */
 class VillaPeruana
-{
-    public $name;
+{ 
 
-    public $quality;
+    private ProductPrototypeFactory $factory;
+    
+    private static $instance;
 
-    public $sellIn;
-
-    public function __construct($name, $quality, $sellIn)
+    private function __construct()
     {
-        $this->name = $name;
-        $this->quality = $quality;
-        $this->sellIn = $sellIn;
+        $this->factory = new SwitchProductFactory();
     }
 
+    /** 
+     * Singleton method
+     * @return self
+    */
+    public static function instance()
+    {
+        if (! isset( VillaPeruana::$instance ) ) {
+        
+            VillaPeruana::$instance = new self();
+        }
+        
+        return VillaPeruana::$instance;
+    }
+
+    /**
+     * Factory of productos
+     * @param string $name the unique name of product
+     * @param int $quality the quality of product
+     * @param int $sellIn the remain day of sell
+     */
     public static function of($name, $quality, $sellIn) {
-        return new static($name, $quality, $sellIn);
+    
+        /**@var  RequestParameters  $params */
+        $params = RequestParameters::makeByParameters($name, $quality, $sellIn);
+        
+        /**@var  ProductPrototypeFactory  $factory */        
+        $factory = VillaPeruana::instance()->factory;
+
+        /**@var  Product  $model */        
+        $model = $factory->make($params);
+        
+        return $model;
     }
-
-    public function tick()
-    {
-        if ($this->name != 'Pisco Peruano' and $this->name != 'Ticket VIP al concierto de Pick Floid') {
-            if ($this->quality > 0) {
-                if ($this->name != 'Tumi de Oro Moche') {
-                    $this->quality = $this->quality - 1;
-                }
-            }
-        } else {
-            if ($this->quality < 50) {
-                $this->quality = $this->quality + 1;
-
-                if ($this->name == 'Ticket VIP al concierto de Pick Floid') {
-                    if ($this->sellIn < 11) {
-                        if ($this->quality < 50) {
-                            $this->quality = $this->quality + 1;
-                        }
-                    }
-                    if ($this->sellIn < 6) {
-                        if ($this->quality < 50) {
-                            $this->quality = $this->quality + 1;
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($this->name != 'Tumi de Oro Moche') {
-            $this->sellIn = $this->sellIn - 1;
-        }
-
-        if ($this->sellIn < 0) {
-            if ($this->name != 'Pisco Peruano') {
-                if ($this->name != 'Ticket VIP al concierto de Pick Floid') {
-                    if ($this->quality > 0) {
-                        if ($this->name != 'Tumi de Oro Moche') {
-                            $this->quality = $this->quality - 1;
-                        }
-                    }
-                } else {
-                    $this->quality = $this->quality - $this->quality;
-                }
-            } else {
-                if ($this->quality < 50) {
-                    $this->quality = $this->quality + 1;
-                }
-            }
-        }
-    }
+ 
 }
