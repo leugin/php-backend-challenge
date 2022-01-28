@@ -21,7 +21,7 @@ describe('Villa Peruana', function () {
                 expect($item->sellIn)->toBe(4);
             });
 
-            it ('actualiza productos normales en la fecha de venta', function () {
+          it ('actualiza productos normales en la fecha de venta', function () {
                 $item = VillaPeruana::of('normal', 10, 0);
 
                 $item->tick();
@@ -50,7 +50,7 @@ describe('Villa Peruana', function () {
 
         });
 
-
+ 
         context('Pisco Peruano', function () {
 
             it ('actualiza Pisco Peruano antes de la fecha de venta', function () {
@@ -158,7 +158,9 @@ describe('Villa Peruana', function () {
                 less and by 3 when there are 5 days or less but Quality drops to
                 0 after the concert
              */
-            it ('actualiza tickets VIP antes de la fecha del evento', function () {
+          
+         
+             it ('actualiza tickets VIP antes de la fecha del evento', function () {
                 $item = VillaPeruana::of('Ticket VIP al concierto de Pick Floid', 10, 11);
 
                 $item->tick();
@@ -166,7 +168,7 @@ describe('Villa Peruana', function () {
                 expect($item->quality)->toBe(11);
                 expect($item->sellIn)->toBe(10);
             });
-
+ 
             it ('actualiza tickets VIP cerca a la fecha del evento', function () {
                 $item = VillaPeruana::of('Ticket VIP al concierto de Pick Floid', 10, 10);
 
